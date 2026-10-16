@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Check, Sparkles, Calendar, MessageSquare, Send, CreditCard, Shield, ArrowRight, QrCode } from 'lucide-react';
-import { PACKAGES, GHAZI_INFO } from '../data/content';
+import { PACKAGES, PackageItem, GHAZI_INFO } from '../data/content';
 import { CeoPortrait } from './CeoPortrait';
 import { PaymentGatewayModal } from './PaymentGatewayModal';
 import { saveLead } from '../data/leadsStore';
@@ -73,7 +73,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({ navigate }) => {
 
       {/* Packages Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 items-stretch">
-        {PACKAGES.map((pkg) => (
+        {PACKAGES.map((pkg: PackageItem) => (
           <div
             key={pkg.name}
             className={`card-luxury p-6 sm:p-8 flex flex-col justify-between relative ${
@@ -99,7 +99,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({ navigate }) => {
               </div>
 
               <ul className="space-y-3 mb-8">
-                {pkg.features.map((feat, idx) => (
+                {pkg.features.map((feat: string, idx: number) => (
                   <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#f5f1e8]">
                     <div className="w-4 h-4 rounded-full bg-[#e8c872]/20 text-[#e8c872] flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-2.5 h-2.5" />
@@ -149,7 +149,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({ navigate }) => {
               Request an Itemized Proposal
             </h3>
             <span className="text-xs text-[#e8c872] block">
-              Personally assessed by Ghazi Wazir · CEO, Back for Brand (USA) & Bab Al-Khaleej (Bahrain)
+              Personally assessed by Ghazi Wazir · CEO, Back for Brand LLC (USA) & Consultant at Bab Al Khaleej (Bahrain)
             </span>
           </div>
         </div>
@@ -164,7 +164,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({ navigate }) => {
               onChange={(e) => setSelectedPackage(e.target.value)}
               className="w-full bg-[#0a0a0f] border border-[#2a2a38] rounded-xl px-4 py-2.5 text-sm text-[#f5f1e8] focus:border-[#e8c872] focus:outline-none"
             >
-              {PACKAGES.map((p) => (
+              {PACKAGES.map((p: PackageItem) => (
                 <option key={p.name} value={p.name}>
                   {p.emoji} {p.name} — {p.subtitle}
                 </option>

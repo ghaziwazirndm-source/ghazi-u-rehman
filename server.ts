@@ -6,23 +6,51 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import dotenv from 'dotenv';
 
+import { z } from 'zod';
+
 dotenv.config();
+
+// Startup Environment Validation via Zod
+const envSchema = z.object({
+  PORT: z.string().optional(),
+  NODE_ENV: z.string().optional(),
+  GEMINI_API_KEY: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
+  STRIPE_SECRET_KEY: z.string().optional(),
+  GA4_MEASUREMENT_ID: z.string().optional(),
+  META_PIXEL_ID: z.string().optional(),
+});
+const parsedEnv = envSchema.safeParse(process.env);
+if (!parsedEnv.success) {
+  console.warn('[Config] Notice: Some optional environment variables are not set:', parsedEnv.error.format());
+}
+console.log('[System Config] Integration Active Status:');
+console.log(` - Gemini AI API: ${process.env.GEMINI_API_KEY ? 'ENABLED' : 'DISABLED (Fallback Active)'}`);
+console.log(` - Resend Email Service: ${process.env.RESEND_API_KEY ? 'ENABLED' : 'DISABLED (Staging Queue)'}`);
+console.log(` - Stripe Payments: ${process.env.STRIPE_SECRET_KEY ? 'ENABLED' : 'DISABLED (Staging Mode)'}`);
 
 const app = express();
 app.disable('x-powered-by');
-const port = 3000;
+const port = Number(process.env.PORT) || 3000;
 const server = http.createServer(app);
 
 app.use(express.json());
 
-// Security Headers & Canonical Host Redirect Middleware
+// Canonical Host & Trailing-Slash Redirect Middleware (Policy: apex domain, no trailing slash)
 app.use((req, res, next) => {
   const host = req.headers.host || '';
   if (host.startsWith('www.ghaziurrehamn.com')) {
     return res.redirect(301, `https://ghaziurrehamn.com${req.url}`);
   }
 
-  // Security Headers for Lighthouse & SecurityHeaders audit compliance
+  // Trailing-slash policy: redirect /about/ -> /about with single 301 (except root '/')
+  if (req.path.length > 1 && req.path.endsWith('/')) {
+    const cleanPath = req.path.slice(0, -1);
+    const query = req.url.slice(req.path.length);
+    return res.redirect(301, cleanPath + query);
+  }
+
+  // Security Headers for Lighthouse & Security compliance
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -34,6 +62,17 @@ app.use((req, res, next) => {
   );
 
   next();
+});
+
+// Healthz endpoint for uptime monitoring and container probes (Phase 0)
+app.get('/healthz', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    version: '2.0.0',
+    uptime: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString(),
+    service: 'Ghazi Wazir Executive Platform',
+  });
 });
 
 // Initialize Gemini SDK with telemetry header
@@ -468,7 +507,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.resolve(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { index: false, redirect: false }));
 
     // Handle application routing in production
     app.get('*', (req, res) => {
@@ -549,6 +588,17 @@ async function startServer() {
     console.log(`[Server] Bab Al-Khaleej & Back for Brand running on http://0.0.0.0:${port}`);
     console.log(`[Server] Gemini Live API Voice Agent available at ws://0.0.0.0:${port}/live`);
   });
+
+  // Graceful Shutdown Handlers (Phase 0)
+  const shutdown = (signal: string) => {
+    console.log(`[Server] ${signal} received: closing HTTP and WebSocket server cleanly`);
+    server.close(() => {
+      console.log('[Server] Server closed');
+      process.exit(0);
+    });
+  };
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => shutdown('SIGINT'));
 }
 
 startServer();

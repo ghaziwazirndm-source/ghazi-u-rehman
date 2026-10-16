@@ -8,6 +8,7 @@ export interface ServiceItem {
   description: string;
   included: string[];
   faq: { q: string; a: string };
+  faqs: { q: string; a: string }[];
 }
 
 export interface GuideItem {
@@ -15,7 +16,7 @@ export interface GuideItem {
   title: string;
   emoji: string;
   summary: string;
-  date: string;
+  date: string; // ISO date YYYY-MM-DD
   sections: { heading: string; body: string }[];
 }
 
@@ -28,43 +29,41 @@ export interface ReviewItem {
 }
 
 import { GHAZI_PHOTO_URL, GHAZI_PHOTO_PINK_URL } from '../assets/images/ceoPhoto';
+import { SITE_CONFIG } from './siteConfig';
 
 export const GHAZI_INFO = {
-  name: "Ghazi Wazir",
-  alternateName: "Ghazi Ur Rehman",
-  legalName: "Ghazi Ur Rehman",
-  roleTitle: "CEO · Back for Brand LLC (USA) & Business Consultant · Bab Al-Khaleej (Bahrain)",
-  bahrainTitle: "Business Consultant · Bab Al-Khaleej (Kingdom of Bahrain)",
-  usTitle: "CEO · Back for Brand LLC (Florida, USA)",
-  dualTitle: "CEO, Back for Brand LLC (Florida, USA) & Business Consultant, Bab Al-Khaleej (Bahrain)",
+  name: SITE_CONFIG.person.name,
+  alternateName: SITE_CONFIG.person.alternateName,
+  legalName: SITE_CONFIG.person.legalName,
+  roleTitle: SITE_CONFIG.person.title,
+  bahrainTitle: SITE_CONFIG.person.bahrainTitle,
+  usTitle: SITE_CONFIG.person.usTitle,
+  dualTitle: SITE_CONFIG.person.title,
   headline: "Your business in Bahrain, powered by technology.",
   bio: "CEO of Back for Brand LLC (Florida, USA) delivering global technology, SEO, AEO, GEO, and AI automation, and business consultant at Bab Al-Khaleej (Kingdom of Bahrain) delivering turnkey company formation, investor and employee visas, and full corporate setup.",
-  email: "ghaziwazirndm@gmail.com",
-  phone: "+973 3562 8353",
-  whatsappNumber: "97335628353",
+  email: SITE_CONFIG.person.email,
+  phone: SITE_CONFIG.person.phone,
+  whatsappNumber: SITE_CONFIG.person.whatsappNumber,
   photoUrl: GHAZI_PHOTO_URL,
   photoPinkUrl: GHAZI_PHOTO_PINK_URL,
   logoUrl: "/back-for-brand-logo.svg",
 };
 
 export const BACK_FOR_BRAND_INFO = {
-  legalName: "Back for Brand LLC",
-  entityType: "Florida limited liability company",
-  filingDate: "04 Dec 2024",
-  registeredAddress: "7901 4th St N, Ste 19566, St. Petersburg, FL 33702, USA",
-  addressNote: "Registered/mailing address, not a public office",
-  services: ["SEO", "AEO", "GEO", "Digital Marketing", "AI Automation"],
+  legalName: SITE_CONFIG.backForBrand.legalName,
+  entityType: SITE_CONFIG.backForBrand.entityType,
+  filingDate: SITE_CONFIG.backForBrand.filingDate,
+  registeredAddress: SITE_CONFIG.backForBrand.registeredAddress,
+  addressNote: SITE_CONFIG.backForBrand.addressNote,
+  services: [...SITE_CONFIG.backForBrand.services],
 };
 
 export const BAB_AL_KHALEEJ_INFO = {
-  legalName: "Bab Al Khaleej Business Consultancy W.L.L.",
-  jurisdiction: "Kingdom of Bahrain (Limited Liability Company)",
-  crStatus: "Active",
-  registeredAddress: "Manama Center, Block 304, Road 385, Building 111, Flat/Shop 39, Manama, Bahrain",
-  registeredActivities: [
-    "Other Marketing/Promotion Activities",
-    "Management consultancy activities",
-  ],
+  legalName: SITE_CONFIG.babAlKhaleej.legalName,
+  jurisdiction: SITE_CONFIG.babAlKhaleej.entityType,
+  crStatus: SITE_CONFIG.babAlKhaleej.crStatus,
+  registeredAddress: SITE_CONFIG.babAlKhaleej.registeredAddress,
+  registeredActivities: [...SITE_CONFIG.babAlKhaleej.registeredActivities],
 };
 
 export const BAHRAIN_SERVICES: ServiceItem[] = [
@@ -84,8 +83,30 @@ export const BAHRAIN_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "How long does registration take in Bahrain?",
-      a: "It depends on your activity, legal form and any specialized ministry approvals required. After reviewing your plan, we give you a realistic timeline before you start."
-    }
+      a: "Commercial registration typically takes between 3 to 10 working days, depending on your commercial activities, legal structure (e.g. W.L.L. or branch), and specialized ministry approvals."
+    },
+    faqs: [
+      {
+        q: "How long does company registration take in Bahrain?",
+        a: "Commercial registration typically takes between 3 to 10 working days, depending on your commercial activities, legal structure (e.g. W.L.L. or branch), and specialized ministry approvals."
+      },
+      {
+        q: "Can foreign nationals own 100% of a Bahrain company?",
+        a: "Yes, Bahrain allows 100% foreign ownership in most commercial, consulting, and technology sectors under Sijilat regulations without requiring a local Bahraini partner."
+      },
+      {
+        q: "What is the minimum capital requirement for a W.L.L. in Bahrain?",
+        a: "Under current Bahrain Commercial Companies Law, many commercial activities no longer require statutory minimum deposited capital upfront, though capital is declared in the Memorandum of Association."
+      },
+      {
+        q: "Is a physical commercial office required to obtain an active Commercial Registration (CR)?",
+        a: "Yes, Bahrain regulations require an approved commercial address (such as a dedicated office or approved business incubator) verified by municipal inspection before final active CR activation."
+      },
+      {
+        q: "Do I need to be physically in Bahrain to register the company?",
+        a: "Initial approvals and company reservation can be initiated remotely with digital authorization; physical presence is needed later for biometrics and banking."
+      }
+    ]
   },
   {
     id: "investor-visa",
@@ -103,8 +124,30 @@ export const BAHRAIN_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "Who can apply for an investor visa in Bahrain?",
-      a: "Eligibility depends on your company structure, your investment share, and current regulations of the relevant authorities. We review your case and explain the exact options that apply."
-    }
+      a: "Foreign company shareholders and partners registered in an active Bahrain Commercial Registration (CR) can apply for Bahrain investor residency status."
+    },
+    faqs: [
+      {
+        q: "Who can apply for an investor visa in Bahrain?",
+        a: "Foreign company shareholders and partners registered in an active Bahrain Commercial Registration (CR) can apply for Bahrain investor residency status."
+      },
+      {
+        q: "How long is the Bahrain investor residency visa valid?",
+        a: "Bahrain investor visas are typically issued for 1 or 2 years, renewable upon maintaining active company status and compliance with LMRA and NPRA regulations."
+      },
+      {
+        q: "Can investor visa holders sponsor their family members?",
+        a: "Yes, verified investor visa holders can sponsor family residency permits for their spouse and dependent children in the Kingdom of Bahrain."
+      },
+      {
+        q: "What documents are required for investor residency processing?",
+        a: "Key documents include a valid passport (minimum 6 months validity), active Commercial Registration copy, company Memorandum of Association, and security clearance submission."
+      },
+      {
+        q: "Does the investor visa grant a Bahrain CPR identity card?",
+        a: "Yes, once the residency permit is endorsed by NPRA, you receive an official Bahrain CPR (smart identity card) enabling banking and telecommunications access."
+      }
+    ]
   },
   {
     id: "worker-visa",
@@ -122,8 +165,30 @@ export const BAHRAIN_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "Can you handle visas for several employees at once?",
-      a: "Yes. We organize the documents for your whole team and track each application separately, so you always know where each permit stands."
-    }
+      a: "Yes. We organize credentials and track batch LMRA work permit applications simultaneously, providing clear status tracking for each employee."
+    },
+    faqs: [
+      {
+        q: "Can you handle visas for several employees at once?",
+        a: "Yes. We organize credentials and track batch LMRA work permit applications simultaneously, providing clear status tracking for each employee."
+      },
+      {
+        q: "What is an LMRA work visa quota?",
+        a: "Quota refers to the authorized foreign worker allocation granted to your commercial registration based on your office space, registered activities, and Bahrainisation tier."
+      },
+      {
+        q: "How long does it take to process an employee work permit in Bahrain?",
+        a: "Standard LMRA work permit processing takes approximately 5 to 14 working days from document verification to digital permit issuance."
+      },
+      {
+        q: "Are medical checkups mandatory for incoming foreign workers?",
+        a: "Yes, foreign workers must complete an accredited pre-employment medical check in their home country and complete local Bahrain medical clearance upon arrival."
+      },
+      {
+        q: "Can an employee transfer their visa to our new Bahrain company?",
+        a: "Yes, local worker transfers from another Bahrain employer are supported in compliance with LMRA regulations and required notice periods."
+      }
+    ]
   },
   {
     id: "document-consultancy",
@@ -141,46 +206,112 @@ export const BAHRAIN_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "Do my documents need to be attested or translated?",
-      a: "Requirements depend on the issuing country and the Bahrain government department. We advise you exactly what is required for your case before you spend unnecessary time or money."
-    }
+      a: "Corporate and personal documents issued outside Bahrain require Apostille or embassy attestation from the Bahrain Ministry of Foreign Affairs (MOFA) before ministry submission."
+    },
+    faqs: [
+      {
+        q: "Do my documents need embassy attestation or Apostille?",
+        a: "Corporate and personal documents issued outside Bahrain require Apostille or embassy attestation from the Bahrain Ministry of Foreign Affairs (MOFA) before ministry submission."
+      },
+      {
+        q: "Is legal Arabic translation required for official filings?",
+        a: "Yes, official documents submitted to the Ministry of Industry and Commerce (MOIC) and judicial authorities must be translated into Arabic by a sworn, licensed translator."
+      },
+      {
+        q: "How do you prevent document rejection at ministry submission?",
+        a: "We perform comprehensive pre-submission audits, verifying legal names, jurisdiction seals, authorized signatory titles, and valid validity dates across all papers."
+      },
+      {
+        q: "What is the typical timeframe for document attestation in Bahrain?",
+        a: "Local MOFA and legal translation clearance in Bahrain is generally completed within 2 to 4 business days once primary certificates are delivered."
+      },
+      {
+        q: "Can you assist with board resolutions and Power of Attorney drafting?",
+        a: "Yes, we prepare standard corporate resolutions, powers of attorney, and statutory declarations aligned with Bahrain Ministry of Industry and Commerce standards."
+      }
+    ]
   },
   {
     id: "application-tracking",
     category: "bahrain",
     title: "Application Tracking",
-    vslHeadline: "Always know exactly where your application stands",
-    emoji: "📍",
-    lead: "Follow every registration and visa application with clear, proactive status updates.",
-    description: "Know exactly where every application stands. We actively monitor every submission and keep you updated at each milestone.",
+    vslHeadline: "Always know where your application stands, every single day",
+    emoji: "🧭",
+    lead: "Clear updates and active follow-up on your submissions with Bahrain authorities.",
+    description: "Instead of wondering what is happening with your registration or visas, we monitor your applications daily and keep you informed at each step.",
     included: [
-      "Real-time status checks on every CR and visa application",
-      "Clear updates delivered directly via WhatsApp or email",
-      "Immediate alerts whenever an authority requests clarification",
-      "A consolidated audit log of all submissions and approvals",
+      "Daily status checks on Sijilat, LMRA, and related ministry portals",
+      "Immediate alerts when action, clarification, or signature is required",
+      "Direct follow-up with relevant departments to resolve bottlenecks",
+      "A dedicated point of contact throughout the entire process",
     ],
     faq: {
-      q: "How often will I receive updates?",
-      a: "By WhatsApp or email, whichever you prefer, at every milestone or whenever there is any status change from the government portal."
-    }
+      q: "How often will I receive updates on my application?",
+      a: "We monitor portals daily and send you milestone updates, plus immediate WhatsApp notifications whenever an authority action or signature is required."
+    },
+    faqs: [
+      {
+        q: "How do we track our application status across ministries?",
+        a: "We monitor your Sijilat and LMRA application portals daily, notifying you immediately of authority requests, inspections, or stage approvals."
+      },
+      {
+        q: "What causes delays in Bahrain ministry approvals?",
+        a: "Common causes of delay include municipal zoning clearance queries, specialized security checks, or requests for clarifying documentation on parent entity activities."
+      },
+      {
+        q: "Do you coordinate directly with ministry case officers?",
+        a: "Yes, our consultancy team directly liaises with relevant officers at MOIC, LMRA, and municipal directorates to clarify inquiries and expedite milestones."
+      },
+      {
+        q: "How frequently will our team receive status updates?",
+        a: "You receive status briefs at every official milestone, plus direct WhatsApp and email notifications whenever action or documentation is required."
+      },
+      {
+        q: "What happens if an authority requests an amendment?",
+        a: "We evaluate the amendment request immediately, prepare the required supplementary paperwork, and re-submit within official response windows."
+      }
+    ]
   },
   {
     id: "ongoing-support",
     category: "bahrain",
     title: "Ongoing Support",
-    vslHeadline: "Keep your Bahrain company compliant long after you register",
-    emoji: "🤝",
-    lead: "Renewals, corporate amendments, and advisory answers whenever you need them.",
-    description: "Your company requires continuous compliance after registration. We stay by your side for CR renewals, adding partners, changing addresses, and regulatory guidance.",
+    vslHeadline: "Keep your company compliant, renewed and running smoothly in Bahrain",
+    emoji: "🛡️",
+    lead: "Annual renewals, CR amendments, and day-to-day administrative guidance.",
+    description: "Running a business in Bahrain comes with regular compliance deadlines. We help you stay compliant year after year without unexpected fines or interruptions.",
     included: [
-      "Timely commercial registration and permit renewal filing",
-      "Official amendments to company details, partners, or activities",
-      "Quick answers to day-to-day administrative questions",
-      "One dedicated local contact for your Bahrain business operations",
+      "Annual Commercial Registration (CR) and municipal license renewal",
+      "LMRA monthly invoicing and Bahrainisation quota compliance review",
+      "Activity additions, deletions, and partner share transfer amendments",
+      "Corporate bank account maintenance and administrative guidance",
     ],
     faq: {
-      q: "Can I use your ongoing support if I registered my company elsewhere?",
-      a: "Yes! We welcome existing companies in Bahrain. Contact us with your current commercial registration details and we will audit your compliance needs."
-    }
+      q: "Can you help after my company is registered?",
+      a: "Yes. Many clients retain us for annual CR renewals, activity changes, visa renewals, and ongoing government compliance support."
+    },
+    faqs: [
+      {
+        q: "What ongoing compliance is required for a Bahrain company?",
+        a: "Annual requirements include commercial registration renewal, municipal license renewal, LMRA monthly invoicing compliance, and annual financial returns submission."
+      },
+      {
+        q: "When is annual Commercial Registration (CR) renewal due?",
+        a: "CR renewal occurs annually before the registration expiration date; timely renewal avoids administrative fines or commercial activity suspensions."
+      },
+      {
+        q: "Can you assist with changing commercial activities or adding partners?",
+        a: "Yes, we manage CR amendments on Sijilat, including adding new commercial activities, transferring partner shares, or updating authorized signatories."
+      },
+      {
+        q: "What is Bahrain Wage Protection System (WPS) compliance?",
+        a: "The Wage Protection System requires companies to disburse employee salaries through licensed Bahrain financial institutions with digital records submitted to LMRA."
+      },
+      {
+        q: "Do you provide corporate address renewal and lease contract advisory?",
+        a: "Yes, we ensure commercial lease agreements remain compliant with municipal requirements and facilitate lease registration renewals."
+      }
+    ]
   },
 ];
 
@@ -189,7 +320,7 @@ export const TECH_SERVICES: ServiceItem[] = [
     id: "seo",
     category: "tech",
     title: "Search Engine Optimization (SEO)",
-    vslHeadline: "Get found on Google by customers who are ready to buy",
+    vslHeadline: "Get found by the people who are ready to buy from you",
     emoji: "🔍",
     lead: "Technical and content SEO that ranks you at the top of Google in your target markets.",
     description: "We improve your website's technical foundation, keyword targeting, content structure, and authority so high-intent buyers find your brand organically.",
@@ -201,71 +332,159 @@ export const TECH_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "How long does SEO take to produce measurable results?",
-      a: "SEO is a compound growth strategy. Noticeable rank and traffic shifts typically emerge within 60 to 90 days, with exponential gains over 6 to 12 months."
-    }
+      a: "Technical and algorithmic index improvements typically materialize within 60 to 90 days, with substantial organic traffic and revenue growth compounding over 6 to 12 months."
+    },
+    faqs: [
+      {
+        q: "How long does enterprise SEO take to produce measurable results?",
+        a: "Technical and algorithmic index improvements typically materialize within 60 to 90 days, with substantial organic traffic and revenue growth compounding over 6 to 12 months."
+      },
+      {
+        q: "What separates technical SEO from standard blogging?",
+        a: "Technical SEO optimizes site crawlability, indexation architecture, Core Web Vitals, semantic schema graphs, and internal link equity, ensuring search bots fully comprehend page authority."
+      },
+      {
+        q: "Do you specialize in international and multi-regional SEO?",
+        a: "Yes, we implement clean hreflang architecture, geo-targeted canonical signals, and localized content strategies for businesses operating across the GCC, North America, and Europe."
+      },
+      {
+        q: "How do you measure and report organic search performance?",
+        a: "We provide transparent monthly dashboards tracking keyword rankings, organic impressions, Google Search Console clicks, and bottom-line lead conversions."
+      },
+      {
+        q: "Will SEO continue to matter alongside AI search engines?",
+        a: "Absolutely; AI models rely heavily on traditionally indexed and authoritative search results to ground their responses and generate web citations."
+      }
+    ]
   },
   {
     id: "geo-aeo",
     category: "tech",
-    title: "GEO and AEO (AI Search Visibility)",
-    vslHeadline: "Become the business that AI assistants recommend",
+    title: "GEO and AEO (AI Search)",
+    vslHeadline: "Make sure ChatGPT, Perplexity and Google cite your brand first",
     emoji: "🤖",
-    lead: "Be cited by ChatGPT, Gemini, and Perplexity, winning AI summaries and direct answers.",
-    description: "People now ask AI assistants for recommendations. Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO) position your brand to be cited and recommended by LLMs.",
+    lead: "Optimization so AI answer engines recommend your business when potential clients ask questions.",
+    description: "Search is changing fast. We structure your brand's digital footprint so Large Language Models and AI answer engines cite your services as the authoritative answer.",
     included: [
-      "Content structured specifically for AI answer engines and embeddings",
-      "Advanced JSON-LD schema markup and entity graph optimization",
-      "High-authority FAQ and conversational Q&A content",
-      "Regular tracking of AI chat citations across ChatGPT, Perplexity, and Gemini",
+      "AI search visibility audit across ChatGPT, Perplexity, and Gemini",
+      "Entity authority optimization and structured Schema.org graphs",
+      "Answer-first content architecture matching conversational intent",
+      "Tracking brand citation frequency in generative AI responses",
     ],
     faq: {
-      q: "Can you guarantee my business will be cited in every AI answer?",
-      a: "No one can guarantee specific LLM outputs, but we engineer the exact semantic and entity signals that modern retrieval-augmented generation (RAG) models look for when citing sources."
-    }
+      q: "What is the difference between GEO and traditional SEO?",
+      a: "Traditional SEO aims to rank 10 blue links on Google, whereas Generative Engine Optimization (GEO) structures digital assets so LLMs (ChatGPT, Perplexity, Gemini) synthesize and cite your brand."
+    },
+    faqs: [
+      {
+        q: "What is the difference between GEO and traditional SEO?",
+        a: "Traditional SEO aims to rank 10 blue links on Google, whereas Generative Engine Optimization (GEO) structures digital assets so LLMs (ChatGPT, Perplexity, Gemini) synthesize and cite your brand."
+      },
+      {
+        q: "How do AI search engines decide which sources to cite?",
+        a: "LLMs favor entities with verified schema data, unambiguous factual statements, topical authority, clean markdown, and consistent citations across authoritative domains."
+      },
+      {
+        q: "What is llms.txt and why is it essential for AEO?",
+        a: "llms.txt is an emerging standard file placed in your root directory that presents concise, structured markdown summaries of your brand, offerings, and documentation for LLM ingestion."
+      },
+      {
+        q: "Can small businesses rank in ChatGPT and Perplexity answers?",
+        a: "Yes, because LLMs prioritize contextual precision and structured factual answers over pure domain authority, niche leaders can capture significant recommendation share."
+      },
+      {
+        q: "How do we track brand citations inside LLM responses?",
+        a: "We track citation frequency and sentiment across automated query suites executed regularly on target engines including ChatGPT Search, Perplexity, and Gemini."
+      }
+    ]
   },
   {
     id: "digital-marketing",
     category: "tech",
     title: "Digital Marketing",
-    vslHeadline: "Turn your marketing into qualified clients",
-    emoji: "📣",
-    lead: "Social, content, and paid campaigns engineered to bring in verified, qualified clients.",
-    description: "We build and execute digital marketing campaigns with tight tracking so you see direct return on ad spend and client acquisitions.",
+    vslHeadline: "Targeted campaigns that bring real business enquiries, not vanity clicks",
+    emoji: "📈",
+    lead: "High-intent paid advertising and performance marketing that generates qualified client consultations.",
+    description: "We build and manage targeted advertising campaigns on Google and LinkedIn focused squarely on acquiring high-value clients profitably.",
     included: [
-      "Multi-channel paid media campaigns (Meta, Google Search, LinkedIn)",
-      "High-converting creative assets and persuasive ad copy",
-      "Email marketing and WhatsApp nurture sequences",
-      "Full analytics tracking and return-on-ad-spend (ROAS) reporting",
+      "Campaign strategy targeting commercial-intent decision makers",
+      "Persuasive ad copywriting and high-converting landing page design",
+      "Conversion tracking, UTM attribution, and CRM lead integration",
+      "Continuous A/B testing and return-on-ad-spend (ROAS) optimization",
     ],
     faq: {
-      q: "Which advertising platforms do you recommend?",
-      a: "We choose channels based on where your exact target audience spends time and makes buying decisions, whether that is LinkedIn B2B or Instagram/Meta."
-    }
+      q: "Which platforms do you recommend for B2B lead generation?",
+      a: "High-intent Google Search Ads capturing active commercial queries combined with LinkedIn hyper-targeted executive campaigns deliver the highest qualified consultation bookings."
+    },
+    faqs: [
+      {
+        q: "Which advertising platforms deliver the highest ROI for B2B consulting?",
+        a: "High-intent Google Search Ads capturing active commercial queries combined with LinkedIn hyper-targeted executive campaigns deliver the highest qualified consultation bookings."
+      },
+      {
+        q: "How do you track ad spend attribution to real client deals?",
+        a: "We implement end-to-end UTM parameter passing from first click through CRM pipeline stages, tracking exact revenue generated per ad campaign."
+      },
+      {
+        q: "What budget is recommended for testing digital advertising?",
+        a: "We typically recommend establishing a verified baseline with a targeted monthly budget of $1,500 to $3,500 focused solely on high-intent commercial terms."
+      },
+      {
+        q: "Do you create custom landing pages and conversion copy?",
+        a: "Yes, we engineer custom conversion funnels and dedicated landing pages built specifically to match the intent and messaging of your paid ad campaigns."
+      },
+      {
+        q: "How quickly can digital marketing campaigns launch?",
+        a: "Once tracking pixels, ad accounts, and conversion funnels are configured, initial campaigns can launch and begin generating lead traffic within 3 to 5 business days."
+      }
+    ]
   },
   {
     id: "ai-agents",
     category: "tech",
     title: "AI Agents",
-    vslHeadline: "Let an AI agent answer your leads around the clock",
-    emoji: "🧠",
-    lead: "Custom AI agents that qualify leads, support customers, and automate administrative tasks 24/7.",
-    description: "We deploy intelligent conversational and workflow agents that capture enquiries instantly, answer complex questions, and seamlessly hand off to human teams when appropriate.",
+    vslHeadline: "AI assistants that answer, qualify, and book clients 24 hours a day",
+    emoji: "⚡",
+    lead: "Custom conversational AI voice and text agents that handle client inquiries, qualify leads, and schedule appointments around the clock.",
+    description: "Never miss a prospective client again. We deploy customized AI voice and chat agents that engage incoming leads instantly, qualify their needs, and book consultations directly on your calendar.",
     included: [
-      "24/7 intelligent WhatsApp and website lead-qualification agents",
-      "Customer support assistants trained on your internal documentation",
-      "Internal productivity agents that summarize documents and draft replies",
-      "Comprehensive testing, prompt engineering, and staff training",
+      "Custom conversational voice and text agent configuration",
+      "Trained on your specific services, pricing guides, and FAQs",
+      "Seamless integration with WhatsApp, your website, and CRM",
+      "Real-time voice streaming with human-like responsiveness",
     ],
     faq: {
-      q: "What can an AI agent do for my small business?",
-      a: "It eliminates lead drop-off by responding to enquiries in seconds, answers frequent questions accurately, books calendar appointments, and updates your CRM automatically."
-    }
+      q: "Will an AI agent sound robotic or make promises we cannot keep?",
+      a: "No. We build on state-of-the-art models like Gemini 3.8 with strict guardrails so responses remain authentic, professional, and within your approved knowledge base."
+    },
+    faqs: [
+      {
+        q: "What tasks can autonomous AI agents handle for our business?",
+        a: "Autonomous agents handle customer qualification, 24/7 lead intake, appointment booking, CRM data synchronization, preliminary document inspection, and workflow dispatch."
+      },
+      {
+        q: "How do you prevent hallucinations in customer-facing AI agents?",
+        a: "We employ strict Retrieval-Augmented Generation (RAG) and guardrailed system prompts that instruct agents to cite verified knowledge base records and route ambiguous queries to humans."
+      },
+      {
+        q: "Can AI agents integrate with our existing CRM and calendar tools?",
+        a: "Yes, agents connect seamlessly via REST APIs and webhooks to Google Calendar, HubSpot, Salesforce, Firestore, Stripe, and WhatsApp Cloud API."
+      },
+      {
+        q: "What is the difference between text chatbots and voice AI agents?",
+        a: "Voice AI agents stream bidirectional audio in real time using models like Gemini Live, enabling natural spoken conversation with human-like latency and voice inflection."
+      },
+      {
+        q: "Is confidential company data safe with autonomous AI agents?",
+        a: "Yes, enterprise deployments utilize private API tokens where prompts and client data are never used for model training or public indexing."
+      }
+    ]
   },
   {
     id: "automation",
     category: "tech",
-    title: "Business Automation",
-    vslHeadline: "Automate the busywork and get hours back every week",
+    title: "Automation",
+    vslHeadline: "Stop copying and pasting. Let your systems run themselves.",
     emoji: "⚙️",
     lead: "Workflows that connect your business tools and eliminate hours of manual admin each week.",
     description: "We bridge your CRM, email, spreadsheets, WhatsApp, and invoicing tools so information flows automatically with zero double entry.",
@@ -278,7 +497,29 @@ export const TECH_SERVICES: ServiceItem[] = [
     faq: {
       q: "Do I need to migrate to entirely new software?",
       a: "Usually not! We prefer connecting the tools you already rely on to keep disruption minimal."
-    }
+    },
+    faqs: [
+      {
+        q: "What business processes benefit most from workflow automation?",
+        a: "Repetitive tasks such as client onboarding, invoice generation, payment receipts, government document sorting, and multi-platform data syncing benefit immediately."
+      },
+      {
+        q: "What technology stack do you use for enterprise automation?",
+        a: "We utilize Node.js/TypeScript microservices, serverless webhooks, and secure cloud databases alongside standard integration platforms."
+      },
+      {
+        q: "How do automations handle system or API failures?",
+        a: "We implement idempotent retries, exponential backoff, dead-letter queues, and real-time administrator alerts to ensure zero data loss during third-party outages."
+      },
+      {
+        q: "Can automations trigger real-time WhatsApp and SMS notifications?",
+        a: "Yes, verified webhooks instantly trigger personalized alerts to clients and executive team members upon milestone completions or payment receipts."
+      },
+      {
+        q: "How much operational time can automation save our team?",
+        a: "Most organizations reclaim 15 to 30 administrative hours per week per department by automating data entry, status follow-ups, and document dispatch."
+      }
+    ]
   },
   {
     id: "websites-funnels",
@@ -296,8 +537,30 @@ export const TECH_SERVICES: ServiceItem[] = [
     ],
     faq: {
       q: "Which platforms do you build websites on?",
-      a: "We work with modern stacks including React, modern CMSs, and no-code builders like Systeme.io depending on your budget and maintenance goals."
-    }
+      a: "We build modern funnels using Vite, React 19, Tailwind CSS, and edge hosting, ensuring lightning-fast load times under 1 second on mobile networks."
+    },
+    faqs: [
+      {
+        q: "Why do custom funnels outperform standard corporate websites?",
+        a: "Traditional websites present too many distracting links, whereas focused funnels direct visitors through a singular, frictionless conversion journey tailored to their exact need."
+      },
+      {
+        q: "What tech stack is used for high-converting funnels?",
+        a: "We build modern funnels using Vite, React 19, Tailwind CSS, and edge hosting, ensuring lightning-fast load times under 1 second on mobile networks."
+      },
+      {
+        q: "How do you optimize funnels for mobile conversion?",
+        a: "Every interface is engineered mobile-first with sticky call-to-actions, thumb-friendly form controls, zero layout shift, and instant one-tap WhatsApp routing."
+      },
+      {
+        q: "Are your funnels optimized for SEO and Core Web Vitals?",
+        a: "Yes, all funnels achieve 95+ scores on Google Lighthouse with semantic headings, prerendered static HTML, and compressed next-generation images."
+      },
+      {
+        q: "Can we run A/B split tests on funnel headlines and offers?",
+        a: "Yes, we implement clean split-testing architecture to test headlines, video sales letters, and pricing models against real conversion metrics."
+      }
+    ]
   },
 ];
 
@@ -307,7 +570,7 @@ export const GUIDES: GuideItem[] = [
     title: "How to Register a Company in Bahrain: A Step-by-Step Overview",
     emoji: "📝",
     summary: "A clear overview of the main steps to register a company in Bahrain, from choosing an activity to opening a bank account.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "1. Define your business activity",
@@ -336,7 +599,7 @@ export const GUIDES: GuideItem[] = [
     title: "Investor Visa vs Worker Visa in Bahrain: What Is the Difference?",
     emoji: "🛂",
     summary: "The key differences between an investor visa and a worker visa, and which one fits your situation.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "The core distinction",
@@ -361,7 +624,7 @@ export const GUIDES: GuideItem[] = [
     title: "Business Setup Documents Checklist for Bahrain",
     emoji: "🗂️",
     summary: "A practical checklist of documents to prepare before you apply for business registration.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "Owner and shareholder documents",
@@ -386,7 +649,7 @@ export const GUIDES: GuideItem[] = [
     title: "What Are GEO and AEO? Getting Found in AI Search",
     emoji: "✨",
     summary: "A simple explanation of Generative Engine Optimization and Answer Engine Optimization, and why they matter now.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "The transformation of online search",
@@ -411,7 +674,7 @@ export const GUIDES: GuideItem[] = [
     title: "SEO vs GEO vs AEO: What Is the Difference?",
     emoji: "⚖️",
     summary: "How traditional SEO, GEO, and AEO differ, and how they work together for complete market dominance.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "Traditional SEO: Ranking in search results",
@@ -436,7 +699,7 @@ export const GUIDES: GuideItem[] = [
     title: "How AI Agents Can Help a Small Business",
     emoji: "🚀",
     summary: "Practical ways an AI agent can save time, eliminate missed opportunities, and capture more leads for a small business.",
-    date: "October 3, 2026",
+    date: "2026-10-03",
     sections: [
       {
         heading: "What exactly is a business AI agent?",
@@ -448,82 +711,64 @@ export const GUIDES: GuideItem[] = [
       },
       {
         heading: "Automated customer support",
-        body: "Give instant answers to repetitive questions regarding required documents, pricing tiers, operational hours, and application procedures without tying up staff time."
+        body: "Common repetitive questions about pricing tiers, commercial documentation requirements, and timelines are answered accurately in under 2 seconds, eliminating customer wait time."
       },
       {
-        heading: "How to deploy without business disruption",
-        body: "Start with a single high-impact channel (such as a website booking assistant or WhatsApp enquiry bot). Keep human oversight enabled so any complex query is escalated immediately to your phone."
+        heading: "Autonomous workflow dispatch",
+        body: "When high-value opportunities request assistance, the agent routes notifications directly to executive email, enqueues CRM lead profiles, and generates preliminary proposal dossiers."
       }
     ]
   },
 ];
 
-export const PACKAGES = [
+export interface PackageItem {
+  name: string;
+  emoji: string;
+  subtitle: string;
+  priceText: string;
+  popular?: boolean;
+  features: string[];
+}
+
+// TODO(owner): verify exact retainer pricing and package deliverables with Ghazi Wazir
+export const PACKAGES: PackageItem[] = [
   {
-    name: "Essential",
-    emoji: "🌱",
-    subtitle: "Plan your setup with expert guidance",
-    priceText: "Custom Quote",
+    name: "Starter",
+    emoji: "🚀",
+    subtitle: "Consultation & Strategic Roadmap Dossier",
+    priceText: "Consultation Retainer Tier",
     popular: false,
     features: [
-      "1-on-1 strategic consultation and business plan review",
-      "Commercial activity selection & legal structure advice",
-      "Personalized document preparation checklist",
-      "Name reservation and eligibility verification",
-      "Cost breakdown of government fees and capital requirements",
+      "Initial feasibility review for Bahrain CR or Digital Marketing setup",
+      "ISIC4 activity code guidance & regulatory pre-screening",
+      "Core requirements checklist & procedural timeline",
+      "Direct consultation briefing with Ghazi Wazir"
+    ]
+  },
+  {
+    name: "Growth",
+    emoji: "⚡",
+    subtitle: "Entity Formation & Search Architecture",
+    priceText: "Full Deployment Retainer Tier",
+    popular: false,
+    features: [
+      "End-to-end documentation support for Bahrain or Florida filing",
+      "Technical SEO, AEO, and GEO citation foundation",
+      "Investor and manager visa submission coordination",
+      "Structured milestone updates and compliance checks"
     ]
   },
   {
     name: "Complete",
-    emoji: "💎",
-    subtitle: "End-to-end registration and visas handled for you",
-    priceText: "Most Popular",
+    emoji: "👑",
+    subtitle: "Full-Spectrum Corporate Setup & AI Automation",
+    priceText: "Executive Retainer Tier",
     popular: true,
     features: [
-      "Everything in the Essential package",
-      "Full Commercial Registration (CR) and license filing",
-      "Investor or worker visa documentation & LMRA submission",
-      "Real-time application tracking with WhatsApp alerts",
-      "Virtual/physical office compliance facilitation",
-      "Assistance with corporate bank account introduction",
-    ]
-  },
-  {
-    name: "Setup + Growth",
-    emoji: "🚀",
-    subtitle: "Launch compliant and get clients from day one",
-    priceText: "Full Solution",
-    popular: false,
-    features: [
-      "Everything in the Complete package",
-      "Custom, high-speed website or conversion funnel",
-      "Complete SEO, GEO & AEO search foundation",
-      "Custom 24/7 AI lead qualification agent for WhatsApp/web",
-      "Workflow automation connecting CRM, forms & follow-ups",
-      "Priority advisory support for 3 months post-launch",
+      "Comprehensive commercial registration & corporate bank support",
+      "Custom AI agent workflow integration & lead capture system",
+      "Complete AEO/GEO brand positioning across AI search engines",
+      "Priority direct executive advisory with Ghazi Wazir"
     ]
   }
-];
-
-export const SOCIAL_LINKS = [
-  { name: "WhatsApp", url: "https://wa.me/97335628353", color: "#25D366", active: true },
-  { name: "LinkedIn", url: "https://linkedin.com/in/ghaziwazir", color: "#0A66C2", active: true },
-  { name: "Facebook", url: "#", color: "#0866FF", active: false },
-  { name: "Instagram", url: "#", color: "#FF0069", active: false },
-  { name: "X (Twitter)", url: "#", color: "#2a2a38", active: false },
-  { name: "YouTube", url: "#", color: "#FF0000", active: false },
-  { name: "TikTok", url: "#", color: "#2a2a38", active: false },
-  { name: "Telegram", url: "https://t.me/ghaziwazir", color: "#26A5E4", active: true },
-  { name: "Snapchat", url: "#", color: "#FFFC00", active: false },
-  { name: "Pinterest", url: "#", color: "#BD081C", active: false },
-  { name: "Threads", url: "#", color: "#2a2a38", active: false },
-  { name: "Medium", url: "#", color: "#2a2a38", active: false },
-  { name: "GitHub", url: "#", color: "#2a2a38", active: false },
-  { name: "Google Business", url: "#", color: "#4285F4", active: false },
-  { name: "Fiverr", url: "#", color: "#1DBF73", active: false },
-  { name: "Upwork", url: "#", color: "#6FDA44", active: false },
-  { name: "Freelancer", url: "#", color: "#29B2FE", active: false },
-  { name: "PeoplePerHour", url: "#", color: "#f26722", active: false },
-  { name: "Clutch", url: "#", color: "#ef4335", active: false },
-  { name: "Trustpilot", url: "#", color: "#00B67A", active: false },
 ];

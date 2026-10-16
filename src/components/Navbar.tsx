@@ -98,8 +98,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Public & Customer Navigation Links
   const customerNavLinks = [
     { label: "Home", route: "" },
-    { label: "Bahrain Setup", route: "business-registration" },
-    { label: "Tech & SEO", route: "seo" },
+    { label: "Bahrain Setup", route: "bahrain-business-setup" },
+    { label: "Tech & SEO", route: "technology-services" },
     { label: "Packages", route: "packages" },
     { label: "Guides", route: "blog" },
     { label: "About", route: "about" },

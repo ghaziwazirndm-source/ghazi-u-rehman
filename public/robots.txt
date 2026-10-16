@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
 Disallow: /admin
 Disallow: /admin/
 Disallow: /dashboard
@@ -30,22 +32,55 @@ Disallow: /live-agent
 Disallow: /thank-you
 Disallow: /apply
 Disallow: /vsl-*
+Disallow: /embed/
 
-# Explicit AI Search Engine rules (GPTBot, PerplexityBot, ClaudeBot, Google-Extended)
+# Explicit AI Search Engine rules (GPTBot, PerplexityBot, ClaudeBot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Applebot-Extended)
 User-agent: GPTBot
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
 
 User-agent: PerplexityBot
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
 
 User-agent: ClaudeBot
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
 Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /api/
 
 Sitemap: https://ghaziurrehamn.com/sitemap.xml

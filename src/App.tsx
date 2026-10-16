@@ -61,12 +61,24 @@ import {
   ServiceItem,
   GuideItem,
 } from './data/content';
-import { trackWhatsAppClick } from './utils/analytics';
+import { BahrainHubView } from './components/BahrainHubView';
+import { TechHubView } from './components/TechHubView';
+import { NotFoundView } from './components/NotFoundView';
+import { trackWhatsAppClick, trackPageView } from './utils/analytics';
 
 export default function App() {
-  const [route, setRoute] = useState<string>(() => {
-    return (window.location.hash || '#/').replace(/^#\/?/, '');
-  });
+  const getCleanPathFromLocation = (): string => {
+    if (typeof window === 'undefined') return '';
+    // If old hash link like #/about, clean it and update history
+    if (window.location.hash && window.location.hash.startsWith('#/')) {
+      const fromHash = window.location.hash.replace(/^#\/?/, '').replace(/\/$/, '');
+      window.history.replaceState(null, '', fromHash ? `/${fromHash}` : '/');
+      return fromHash;
+    }
+    return window.location.pathname.replace(/^\/|\/$/g, '');
+  };
+
+  const [route, setRoute] = useState<string>(getCleanPathFromLocation);
 
   const [currentLang, setCurrentLang] = useState<LanguageCode>('en');
   const [socialLinks, setSocialLinks] = useState<SocialLinkItem[]>(() => getStoredSocialLinks());
@@ -111,21 +123,48 @@ export default function App() {
   };
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const cleanRoute = (window.location.hash || '#/').replace(/^#\/?/, '');
+    const handlePopState = () => {
+      const cleanRoute = getCleanPathFromLocation();
       setRoute(cleanRoute);
+      trackPageView(window.location.pathname, document.title);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const navigate = (newRoute: string) => {
-    window.location.hash = `#/${newRoute}`;
-    setRoute(newRoute);
+    const clean = newRoute.replace(/^#\/?/, '').replace(/^\//, '').replace(/\/$/, '');
+    const targetUrl = clean ? `/${clean}` : '/';
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState(null, '', targetUrl);
+    }
+    setRoute(clean);
+    trackPageView(targetUrl, document.title);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Intercept standard internal links for single-page client transitions
+  useEffect(() => {
+    const handleLinkClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement)?.closest('a');
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (
+        href &&
+        href.startsWith('/') &&
+        !href.startsWith('//') &&
+        !anchor.hasAttribute('download') &&
+        anchor.target !== '_blank'
+      ) {
+        e.preventDefault();
+        navigate(href);
+      }
+    };
+    document.addEventListener('click', handleLinkClick);
+    return () => document.removeEventListener('click', handleLinkClick);
+  }, []);
 
   // Check if route is an admin / CRM route
   const isAdminRoute = [
@@ -151,10 +190,22 @@ export default function App() {
     'ceo',
   ].includes(route);
 
-  // Check if current route matches a service
-  const matchedBahrainService = BAHRAIN_SERVICES.find((s) => s.id === route);
-  const matchedTechService = TECH_SERVICES.find((s) => s.id === route);
-  const matchedService = matchedBahrainService || matchedTechService;
+  // Hub Routes
+  const isBahrainHub = route === 'bahrain-business-setup';
+  const isTechHub = route === 'technology-services';
+
+  // Check if current route matches a service (supports /bahrain-business-setup/:id, /technology-services/:id, or legacy :id)
+  const serviceSlug = route.startsWith('bahrain-business-setup/')
+    ? route.replace('bahrain-business-setup/', '')
+    : route.startsWith('technology-services/')
+    ? route.replace('technology-services/', '')
+    : route;
+
+  const matchedBahrainService = BAHRAIN_SERVICES.find((s) => s.id === serviceSlug);
+  const matchedTechService = TECH_SERVICES.find((s) => s.id === serviceSlug);
+  const matchedService = (route.startsWith('bahrain-business-setup/') || route.startsWith('technology-services/') || BAHRAIN_SERVICES.some((s) => s.id === route) || TECH_SERVICES.some((s) => s.id === route))
+    ? (matchedBahrainService || matchedTechService)
+    : null;
 
   // Check if current route is a VSL funnel: e.g. "vsl-business-registration" or "vsl-seo"
   const isVsl = route.startsWith('vsl-');
@@ -163,16 +214,35 @@ export default function App() {
     ? (BAHRAIN_SERVICES.find((s) => s.id === vslId) || TECH_SERVICES.find((s) => s.id === vslId))
     : null;
 
-  // Check if current route matches a guide
-  const matchedGuide = GUIDES.find((g) => g.id === route);
+  // Check if current route matches a guide (supports /blog/:slug, /guide-:slug, or :slug)
+  const guideSlug = route.startsWith('blog/')
+    ? route.replace('blog/', '')
+    : route.startsWith('guide-')
+    ? route.replace('guide-', '')
+    : route;
+
+  const matchedGuide = (route.startsWith('blog/') || route.startsWith('guide-') || GUIDES.some((g) => g.id === route))
+    ? GUIDES.find((g) => g.id === `guide-${guideSlug}` || g.id === guideSlug)
+    : null;
 
   // Legal routes
   const isLegalRoute = [
+    'privacy',
     'privacy-policy',
+    'terms',
     'terms-of-service',
     'disclaimer',
     'cookie-policy',
   ].includes(route);
+
+  const legalType: 'privacy-policy' | 'terms-of-service' | 'disclaimer' | 'cookie-policy' =
+    route === 'privacy' || route === 'privacy-policy'
+      ? 'privacy-policy'
+      : route === 'terms' || route === 'terms-of-service'
+      ? 'terms-of-service'
+      : route === 'cookie-policy'
+      ? 'cookie-policy'
+      : 'disclaimer';
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-[#f5f1e8] relative selection:bg-[#e8c872]/30 selection:text-[#e8c872]">
@@ -299,6 +369,10 @@ export default function App() {
           <ApplyView navigate={navigate} />
         ) : route === 'thank-you' ? (
           <ThankYouView navigate={navigate} />
+        ) : isBahrainHub ? (
+          <BahrainHubView navigate={navigate} />
+        ) : isTechHub ? (
+          <TechHubView navigate={navigate} />
         ) : matchedService ? (
           <ServiceDetailView
             service={matchedService}
@@ -326,8 +400,8 @@ export default function App() {
         ) : route === 'book' ? (
           <ApplyView navigate={navigate} />
         ) : isLegalRoute ? (
-          <LegalView type={route as any} navigate={navigate} />
-        ) : (
+          <LegalView type={legalType} navigate={navigate} />
+        ) : route === '' ? (
           /* HOME VIEW */
           <div>
             {/* HERO SECTION */}
@@ -864,6 +938,9 @@ export default function App() {
               </div>
             </section>
           </div>
+        ) : (
+          /* 404 NOT FOUND VIEW */
+          <NotFoundView navigate={navigate} />
         )}
       </main>
 

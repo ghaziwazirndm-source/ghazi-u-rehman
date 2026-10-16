@@ -253,19 +253,23 @@ export const ServiceDetailView: React.FC<ServiceDetailViewProps> = ({
         </div>
       </section>
 
-      {/* Frequently Asked Question */}
+      {/* Frequently Asked Questions */}
       <section className="bg-[#101018] border border-[#2a2a38] rounded-2xl p-6 sm:p-8 mb-12">
-        <h2 className="text-2xl font-serif font-bold text-[#e8c872] mb-4 flex items-center gap-2">
+        <h2 className="text-2xl font-serif font-bold text-[#e8c872] mb-6 flex items-center gap-2">
           <HelpCircle className="w-6 h-6 text-[#b8893a]" />
-          <span>Frequently Asked Question</span>
+          <span>Frequently Asked Questions</span>
         </h2>
-        <div className="bg-[#14141d] border border-[#2a2a38]/80 rounded-xl p-5">
-          <h3 className="font-semibold text-white text-base mb-2">
-            {service.faq.q}
-          </h3>
-          <p className="text-sm text-[#a8a7b3] leading-relaxed">
-            {service.faq.a}
-          </p>
+        <div className="space-y-4">
+          {(service.faqs || [service.faq]).map((faqItem, idx) => (
+            <div key={idx} className="bg-[#14141d] border border-[#2a2a38]/80 rounded-xl p-5">
+              <h3 className="font-semibold text-white text-base mb-2">
+                {faqItem.q}
+              </h3>
+              <p className="text-sm text-[#a8a7b3] leading-relaxed">
+                {faqItem.a}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
