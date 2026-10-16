@@ -8,6 +8,7 @@ interface CeoPortraitProps {
   showBorder?: boolean;
   variant?: 'main' | 'pink';
   alt?: string;
+  priority?: boolean;
 }
 
 export const CeoPortrait: React.FC<CeoPortraitProps> = ({
@@ -16,7 +17,8 @@ export const CeoPortrait: React.FC<CeoPortraitProps> = ({
   rounded = '2xl',
   showBorder = true,
   variant = 'main',
-  alt = 'Ghazi Wazir — CEO, Back for Brand LLC & Business Consultant, Bab Al-Khaleej Bahrain',
+  alt = 'Ghazi Wazir — CEO of Back for Brand LLC & Business Consultant at Bab Al-Khaleej Bahrain',
+  priority = false,
 }) => {
   const initialSrc = variant === 'pink' ? GHAZI_PHOTO_PINK_URL : GHAZI_PHOTO_URL;
   const [imgSrc, setImgSrc] = useState<string>(initialSrc);
@@ -51,6 +53,8 @@ export const CeoPortrait: React.FC<CeoPortraitProps> = ({
     ? 'border-2 border-[#e8c872] shadow-[0_0_20px_rgba(232,200,114,0.2)]'
     : '';
 
+  const isHero = size === 'hero' || priority;
+
   return (
     <img
       src={imgSrc}
@@ -58,7 +62,8 @@ export const CeoPortrait: React.FC<CeoPortraitProps> = ({
       width={dimensions[size].width}
       height={dimensions[size].height}
       decoding="async"
-      loading={size === 'hero' ? 'eager' : 'lazy'}
+      loading={isHero ? 'eager' : 'lazy'}
+      fetchPriority={isHero ? 'high' : 'auto'}
       referrerPolicy="no-referrer"
       onError={() => {
         const fallback = variant === 'pink' ? '/ghazi-wazir-pink-suit.jpg' : '/ghazi-wazir.jpg';

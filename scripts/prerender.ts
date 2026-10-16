@@ -47,41 +47,50 @@ const routes: RouteMetadata[] = [
   // 1. Home
   {
     path: '/',
-    title: 'Ghazi Wazir — Bahrain Business Setup & AI Search (SEO, AEO)',
-    description: 'CEO of Back for Brand LLC (USA) and consultant at Bab Al-Khaleej (Bahrain). Turnkey commercial registration, investor visas, SEO, and AI automation.',
+    title: 'Bahrain Business Setup & Visas Advisory | Ghazi Wazir',
+    description: 'Bahrain business setup and visas with Bab Al-Khaleej, plus global SEO, AEO, and AI automation by Back for Brand LLC. Schedule a consultation with Ghazi Wazir.',
     canonical: `${BASE_URL}/`,
-    h1: 'Ghazi Wazir — Bahrain Business Setup & AI Search (SEO, AEO, GEO)',
-    lead: 'Executive consulting for turnkey Bahrain commercial registration (CR), investor and worker visas, combined with international SEO, Generative Engine Optimization (GEO), and autonomous AI systems.',
+    h1: 'Bahrain Business Setup & AI Search by Ghazi Wazir',
+    lead: 'Executive consulting for turnkey Bahrain commercial registration (CR), investor and worker visas with Bab Al-Khaleej, combined with international SEO, Generative Engine Optimization (GEO), and autonomous AI systems by Back for Brand LLC.',
     contentHtml: `
       <section>
-        <h2>Executive Profile: Ghazi Wazir</h2>
-        <p>Ghazi Wazir (legally Ghazi Ur Rehman) operates two distinct professional organizations across the United States and the Kingdom of Bahrain.</p>
-        <div>
-          <h3>Back for Brand LLC (Florida, USA)</h3>
-          <p>Providing enterprise-grade Generative Engine Optimization (GEO), Answer Engine Optimization (AEO), international Technical SEO, and AI workflow automation.</p>
-        </div>
+        <h2>Business Setup & Visa Services in Bahrain by Bab Al-Khaleej</h2>
+        <p>Comprehensive corporate formation and immigration support across the Kingdom of Bahrain under commercial registration 180572-1.</p>
+        <ul>
+          ${BAHRAIN_SERVICES.map(s => `<li><h3><a href="/bahrain-business-setup/${s.id}">${s.title}</a></h3><p>${s.lead}</p></li>`).join('')}
+        </ul>
+        <p><em>Official Regulatory Notice: We provide consultancy and document support. Approvals are issued solely by the competent Bahraini authorities (MOIC, LMRA, NPRA).</em></p>
+      </section>
+      <section>
+        <h2>Back for Brand LLC: SEO, AEO & GEO AI Growth</h2>
+        <p>Enterprise technology solutions engineered by Back for Brand LLC (Florida LLC filed 04 Dec 2024; registered/mailing address: 7901 4th St N, Ste 19566, St. Petersburg, FL 33702, USA; not a public office).</p>
+        <ul>
+          ${TECH_SERVICES.map(s => `<li><h3><a href="/technology-services/${s.id}">${s.title}</a></h3><p>${s.lead}</p></li>`).join('')}
+        </ul>
+      </section>
+      <section>
+        <h2>About Bab Al-Khaleej & Back for Brand LLC: Leadership by Ghazi Wazir</h2>
+        <p>Ghazi Wazir (legally Ghazi Ur Rehman) leads two distinct, non-affiliated corporate organizations serving regional Middle East ventures and international digital technology clients.</p>
         <div>
           <h3>Bab Al Khaleej Business Consultancy W.L.L. (Kingdom of Bahrain)</h3>
           <p>Delivering commercial registration (CR) guidance, investor visa advisory, worker visa support, and ministry clearance. Approvals are issued exclusively by the competent Bahraini government authorities (MOIC, LMRA, NPRA).</p>
         </div>
-      </section>
-      <section>
-        <h2>Bahrain Business Setup Services</h2>
-        <ul>
-          ${BAHRAIN_SERVICES.map(s => `<li><h3><a href="/bahrain-business-setup/${s.id}">${s.title}</a></h3><p>${s.lead}</p></li>`).join('')}
-        </ul>
-      </section>
-      <section>
-        <h2>Technology & AI Search Services</h2>
-        <ul>
-          ${TECH_SERVICES.map(s => `<li><h3><a href="/technology-services/${s.id}">${s.title}</a></h3><p>${s.lead}</p></li>`).join('')}
-        </ul>
+        <div>
+          <h3>Back for Brand LLC (Florida, USA)</h3>
+          <p>Providing enterprise-grade Generative Engine Optimization (GEO), Answer Engine Optimization (AEO), international Technical SEO, and AI workflow automation.</p>
+        </div>
       </section>
       <section>
         <h2>Authoritative Knowledge & Guides</h2>
         <ul>
           ${GUIDES.map(g => `<li><h3><a href="/blog/${g.id.replace('guide-', '')}">${g.title}</a></h3><p>${g.summary}</p></li>`).join('')}
         </ul>
+      </section>
+      <section>
+        <h2>Contact Ghazi Wazir</h2>
+        <p>Address: Office 22, Building 342, Road 1705, Block 317, Diplomatic Area, Manama, Kingdom of Bahrain</p>
+        <p>Phone: +973 3550 7868 | WhatsApp: +973 3562 8353</p>
+        <p>Email: ghaziwazirndm@gmail.com</p>
       </section>
     `,
     schema: {

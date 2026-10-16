@@ -177,17 +177,34 @@ export const ContactView: React.FC<ContactViewProps> = ({ navigate }) => {
             <div className="w-12 h-12 rounded-2xl bg-[#3a2a7a]/40 border border-[#6b52d6]/40 flex items-center justify-center shrink-0">
               <MapPin className="w-6 h-6 text-[#c4b5fd]" />
             </div>
-            <div>
-              <span className="text-xs uppercase tracking-wider text-[#a8a7b3] font-semibold block mb-0.5">
-                Locations & Presence
-              </span>
-              <strong className="text-base font-bold text-white block mb-1">
-                Bahrain & United States
-              </strong>
-              <p className="text-xs text-[#a8a7b3] leading-relaxed">
-                Bab Al-Khaleej · Kingdom of Bahrain<br />
-                Back for Brand LLC · Florida, USA
-              </p>
+            <div className="space-y-3 text-xs">
+              <div>
+                <span className="text-[11px] uppercase tracking-wider text-[#e8c872] font-semibold block mb-0.5">
+                  Bahrain Office &amp; Operations
+                </span>
+                <strong className="text-sm font-bold text-white block mb-0.5">
+                  Bab Al Khaleej Business Consultancy W.L.L.
+                </strong>
+                <p className="text-[#a8a7b3] leading-relaxed">
+                  Address: Office 22, Building 342, Road 1705, Block 317, Diplomatic Area, Manama, Kingdom of Bahrain<br />
+                  Commercial Registration: 180572-1<br />
+                  Phone: <a href="tel:+97335507868" className="text-[#e8c872] hover:underline">+973 3550 7868</a><br />
+                  Email: <a href={`mailto:${GHAZI_INFO.email}`} className="text-[#e8c872] hover:underline">{GHAZI_INFO.email}</a>
+                </p>
+              </div>
+
+              <div className="pt-2 border-t border-[#2a2a38]">
+                <span className="text-[11px] uppercase tracking-wider text-[#00C98D] font-semibold block mb-0.5">
+                  USA Corporate Registration
+                </span>
+                <strong className="text-sm font-bold text-white block mb-0.5">
+                  Back for Brand LLC
+                </strong>
+                <p className="text-[#a8a7b3] leading-relaxed">
+                  Registered/Mailing Address: 7901 4th St N, Ste 19566, St. Petersburg, FL 33702, USA (Mailing address, not a public walk-in office)<br />
+                  Email: <a href={`mailto:${GHAZI_INFO.email}`} className="text-[#00C98D] hover:underline">{GHAZI_INFO.email}</a>
+                </p>
+              </div>
             </div>
           </div>
 

@@ -54,7 +54,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ navigate }) => {
             Biography & Leadership
           </div>
           <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white mb-3">
-            Ghazi Wazir
+            Ghazi Wazir — Bahrain Business Setup &amp; AI Technology
           </h1>
           <div className="text-base sm:text-lg text-[#e8c872] font-semibold mb-4 space-y-1">
             <p>🇺🇸 CEO · Back for Brand LLC (Florida, USA)</p>
@@ -115,7 +115,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ navigate }) => {
               </div>
             </div>
             <h2 className="text-xl font-serif font-bold text-white mb-2">
-              🇧🇭 Bab Al-Khaleej (Bahrain)
+              🇧🇭 About Bab Al-Khaleej: Bahrain Business Setup &amp; Visas
             </h2>
             <p className="text-sm text-[#a8a7b3] leading-relaxed mb-4">
               Specialized business consultancy based in the Kingdom of Bahrain. We assist international and local investors with end-to-end commercial formation, investor residency permits, worker quotas, and governmental liaison.
@@ -157,7 +157,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ navigate }) => {
               <div>
                 <span className="text-[11px] font-semibold text-[#00C98D] uppercase tracking-wider block">Florida LLC · Filed 04 Dec 2024</span>
                 <h2 className="text-xl font-serif font-bold text-white">
-                  Back for Brand LLC (USA)
+                  Back for Brand LLC: SEO, AEO &amp; GEO AI Growth
                 </h2>
               </div>
             </div>

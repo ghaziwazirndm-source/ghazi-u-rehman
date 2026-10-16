@@ -433,8 +433,7 @@ export default function App() {
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
-                      Your business in Bahrain,{' '}
-                      <span className="gold">powered by technology.</span>
+                      Bahrain Business Setup &amp; AI Search by <span className="gold">Ghazi Wazir</span>
                     </h1>
 
                     <p className="text-base sm:text-lg text-[#a8a7b3] leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
@@ -506,7 +505,7 @@ export default function App() {
                       🇧🇭 Bab Al-Khaleej · Business Consultancy
                     </div>
                     <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white">
-                      🏛️ Start & Stay <span className="gold">Compliant in Bahrain</span>
+                      🏛️ Business Setup &amp; Visa Services in Bahrain by <span className="gold">Bab Al-Khaleej</span>
                     </h2>
                     <p className="text-base text-[#a8a7b3] max-w-2xl mt-2">
                       Everything you need to register, license, staff, and run your company in Bahrain with complete regulatory peace of mind.
@@ -582,7 +581,7 @@ export default function App() {
                       </div>
                     </div>
                     <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-2">
-                      📈 Scale Online, <span className="gold">Anywhere in the World</span>
+                      📈 <span className="gold">Back for Brand LLC</span>: SEO, AEO &amp; GEO AI Growth
                     </h2>
                     <p className="text-base text-[#a8a7b3] max-w-2xl">
                       High-intent organic SEO, Generative AI Search (GEO & AEO for ChatGPT, Perplexity, Gemini), custom AI agents, and automated conversion funnels.
@@ -825,7 +824,7 @@ export default function App() {
                     Verified Ecosystem
                   </div>
                   <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-1">
-                    🌐 Find Me Everywhere Online
+                    🌐 Connect with <span className="gold">Ghazi Wazir</span> Online
                   </h2>
                   <p className="text-sm text-[#a8a7b3]">
                     Connect with Ghazi Wazir across professional networks, social profiles, and industry directories.

@@ -256,6 +256,27 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
           </div>
         </div>
 
+        {/* Plain Text Business Address and Phone (SEO & Local Entity Grounding) */}
+        <div className="bg-[#14141d] border border-[#2a2a38] rounded-xl p-5 mb-6 text-xs text-[#a8a7b3] space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <strong className="text-white block font-serif text-sm mb-1">🇧🇭 Bab Al Khaleej Business Consultancy W.L.L.</strong>
+              <p className="leading-relaxed">
+                Address: Office 22, Building 342, Road 1705, Block 317, Diplomatic Area, Manama, Kingdom of Bahrain (CR: 180572-1)<br />
+                Phone: +973 3550 7868 | WhatsApp: +973 3562 8353<br />
+                Email: {GHAZI_INFO.email}
+              </p>
+            </div>
+            <div>
+              <strong className="text-white block font-serif text-sm mb-1">🇺🇸 Back for Brand LLC</strong>
+              <p className="leading-relaxed">
+                Registered/Mailing Address: 7901 4th St N, Ste 19566, St. Petersburg, FL 33702, USA (Mailing address, not a public walk-in office)<br />
+                Email: {GHAZI_INFO.email}
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Regulatory Disclaimer Notice */}
         <div className="bg-[#14141d] border border-[#2a2a38] rounded-xl p-4 text-[11px] text-[#a8a7b3] leading-relaxed mb-6">
           <span className="font-bold text-[#e8c872] block mb-1">
