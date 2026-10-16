@@ -1,0 +1,6 @@
+{
+  "name": "Ghazi Wazir — CEO, Back for Brand LLC | Bahrain Business Setup & Tech",
+  "description": "Official executive portal of Ghazi Wazir: CEO of Back for Brand LLC (Florida, USA) and business consultant at Bab Al-Khaleej (Bahrain). Bahrain business setup, CR, visas, SEO, AEO, GEO, and AI automation.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

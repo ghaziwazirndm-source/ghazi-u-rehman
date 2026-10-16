@@ -1,0 +1,121 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Client consultation inquiry or business registration intake record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "whatsapp": { "type": "string", "maxLength": 40 },
+        "country": { "type": "string", "maxLength": 80 },
+        "service": { "type": "string", "maxLength": 120 },
+        "package": { "type": "string", "maxLength": 80 },
+        "budget": { "type": "string", "maxLength": 80 },
+        "source": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "maxLength": 40 },
+        "temperature": { "type": "string", "maxLength": 20 },
+        "notes": { "type": "string", "maxLength": 5000 },
+        "createdDate": { "type": "string", "maxLength": 60 },
+        "updatedDate": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "name", "email", "service", "status"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Executive advisory or consultation appointment record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "serviceId": { "type": "string", "maxLength": 80 },
+        "serviceName": { "type": "string", "maxLength": 120 },
+        "consultationType": { "type": "string", "maxLength": 50 },
+        "date": { "type": "string", "maxLength": 30 },
+        "timeSlot": { "type": "string", "maxLength": 30 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "whatsapp": { "type": "string", "maxLength": 40 },
+        "country": { "type": "string", "maxLength": 80 },
+        "message": { "type": "string", "maxLength": 3000 },
+        "status": { "type": "string", "maxLength": 30 },
+        "meetingLink": { "type": "string", "maxLength": 255 },
+        "assignedAdvisor": { "type": "string", "maxLength": 100 },
+        "createdDate": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "serviceName", "date", "timeSlot", "name", "email", "status"]
+    },
+    "PaymentTransaction": {
+      "title": "PaymentTransaction",
+      "description": "Government fee, retainer, or technology service payment ledger entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "clientName": { "type": "string", "maxLength": 120 },
+        "clientEmail": { "type": "string", "maxLength": 150 },
+        "clientPhone": { "type": "string", "maxLength": 40 },
+        "clientCountry": { "type": "string", "maxLength": 80 },
+        "serviceId": { "type": "string", "maxLength": 80 },
+        "serviceTitle": { "type": "string", "maxLength": 120 },
+        "packageTier": { "type": "string", "maxLength": 80 },
+        "amountBhd": { "type": "number" },
+        "amountUsd": { "type": "number" },
+        "gateway": { "type": "string", "maxLength": 50 },
+        "gatewayName": { "type": "string", "maxLength": 80 },
+        "status": { "type": "string", "maxLength": 40 },
+        "referenceNumber": { "type": "string", "maxLength": 80 },
+        "fawriReference": { "type": "string", "maxLength": 80 },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "timestamp": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["id", "clientName", "clientEmail", "serviceTitle", "amountBhd", "gateway", "status"]
+    },
+    "SystemSettings": {
+      "title": "SystemSettings",
+      "description": "Enterprise platform settings, AI parameters, and tenant configurations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "configJson": { "type": "string", "maxLength": 20000 },
+        "updatedAt": { "type": "string", "maxLength": 60 },
+        "updatedBy": { "type": "string", "maxLength": 120 }
+      },
+      "required": ["id", "configJson", "updatedAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Document establishing verified executive administrator identity",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "maxLength": 40 },
+        "email": { "type": "string", "maxLength": 150 },
+        "grantedAt": { "type": "string", "maxLength": 60 }
+      },
+      "required": ["uid", "role", "email"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Collection of client leads and registration inquiries"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Collection of consultation bookings"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "PaymentTransaction",
+      "description": "Collection of payment retainers and settlement ledger records"
+    },
+    "/system_settings/{settingId}": {
+      "schema": "SystemSettings",
+      "description": "Singleton or tenant configuration state"
+    },
+    "/admins/{adminUid}": {
+      "schema": "AdminUser",
+      "description": "Trusted collection of authorized administrative user identities"
+    }
+  }
+}

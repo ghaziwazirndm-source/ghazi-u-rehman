@@ -1,0 +1,117 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Security Primitives & Helpers
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Lead Validation Helper
+    function isValidLead(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'service', 'status'])
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 120
+        && data.email is string && data.email.size() > 0 && data.email.size() <= 150
+        && data.service is string && data.service.size() <= 120
+        && data.status is string && data.status.size() <= 40
+        && (!('notes' in data) || (data.notes is string && data.notes.size() <= 5000))
+        && (!('country' in data) || (data.country is string && data.country.size() <= 80))
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 40));
+    }
+
+    // Booking Validation Helper
+    function isValidBooking(data) {
+      return data.keys().hasAll(['id', 'serviceName', 'date', 'timeSlot', 'name', 'email', 'status'])
+        && data.id is string && data.id.size() <= 128
+        && data.serviceName is string && data.serviceName.size() <= 120
+        && data.date is string && data.date.size() <= 30
+        && data.timeSlot is string && data.timeSlot.size() <= 30
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 120
+        && data.email is string && data.email.size() > 0 && data.email.size() <= 150
+        && data.status is string && data.status.size() <= 30
+        && (!('message' in data) || (data.message is string && data.message.size() <= 3000));
+    }
+
+    // Payment Transaction Validation Helper
+    function isValidTransaction(data) {
+      return data.keys().hasAll(['id', 'clientName', 'clientEmail', 'serviceTitle', 'amountBhd', 'gateway', 'status'])
+        && data.id is string && data.id.size() <= 128
+        && data.clientName is string && data.clientName.size() > 0 && data.clientName.size() <= 120
+        && data.clientEmail is string && data.clientEmail.size() > 0 && data.clientEmail.size() <= 150
+        && data.serviceTitle is string && data.serviceTitle.size() <= 120
+        && data.amountBhd is number
+        && data.gateway is string && data.gateway.size() <= 50
+        && data.status is string && data.status.size() <= 40;
+    }
+
+    // System Settings Validation Helper
+    function isValidSystemSettings(data) {
+      return data.keys().hasAll(['id', 'configJson', 'updatedAt'])
+        && data.id is string && data.id.size() <= 64
+        && data.configJson is string && data.configJson.size() <= 20000
+        && data.updatedAt is string && data.updatedAt.size() <= 60;
+    }
+
+    // 2. Leads Collection
+    match /leads/{leadId} {
+      allow get: if isValidId(leadId) && (isAdmin() || (isSignedIn() && existing().email == request.auth.token.email));
+      allow list: if isAdmin() || (isSignedIn() && existing().email == request.auth.token.email);
+      allow create: if isValidId(leadId) && isValidLead(incoming());
+      allow update: if isValidId(leadId) && isAdmin() && isValidLead(incoming());
+      allow delete: if isValidId(leadId) && isAdmin();
+    }
+
+    // 3. Bookings Collection
+    match /bookings/{bookingId} {
+      allow get: if isValidId(bookingId) && (isAdmin() || (isSignedIn() && existing().email == request.auth.token.email));
+      allow list: if isAdmin() || (isSignedIn() && existing().email == request.auth.token.email);
+      allow create: if isValidId(bookingId) && isValidBooking(incoming());
+      allow update: if isValidId(bookingId) && isAdmin() && isValidBooking(incoming());
+      allow delete: if isValidId(bookingId) && isAdmin();
+    }
+
+    // 4. Payment Transactions Collection
+    match /transactions/{transactionId} {
+      allow get: if isValidId(transactionId) && (isAdmin() || (isSignedIn() && existing().clientEmail == request.auth.token.email));
+      allow list: if isAdmin() || (isSignedIn() && existing().clientEmail == request.auth.token.email);
+      allow create: if isValidId(transactionId) && isValidTransaction(incoming());
+      allow update: if isValidId(transactionId) && isAdmin() && isValidTransaction(incoming());
+      allow delete: if isValidId(transactionId) && isAdmin();
+    }
+
+    // 5. System Settings Collection
+    match /system_settings/{settingId} {
+      allow get, list: if isValidId(settingId) && isAdmin();
+      allow create, update: if isValidId(settingId) && isAdmin() && isValidSystemSettings(incoming());
+      allow delete: if false;
+    }
+
+    // 6. Admins Collection
+    match /admins/{adminUid} {
+      allow get: if isValidId(adminUid) && isSignedIn();
+      allow list: if isAdmin();
+      allow write: if false;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8c872" />
+      <stop offset="50%" stop-color="#c59b27" />
+      <stop offset="100%" stop-color="#b8893a" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D094" />
+      <stop offset="100%" stop-color="#00A876" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left 'B' in Teal -->
+  <path d="M 125,120 L 165,120 C 182,120 192,128 192,142 C 192,152 186,159 176,163 C 189,167 196,177 196,193 C 196,212 182,222 163,222 L 125,222 Z M 147,138 L 147,160 L 162,160 C 170,160 174,155 174,149 C 174,143 170,138 162,138 Z M 147,178 L 147,204 L 163,204 C 172,204 177,198 177,191 C 177,183 172,178 163,178 Z" fill="url(#tealGrad)" />
+
+  <!-- Center stylized gold integration ligature / curved divider -->
+  <path d="M 215,95 C 205,95 197,105 197,118 L 197,145 C 197,150 200,154 204,154 C 208,154 211,150 211,145 L 211,120 C 211,114 214,109 220,109 C 224,109 227,112 227,116 C 227,119 225,124 220,132 L 192,185 C 187,194 185,202 185,210 C 185,228 198,242 216,242 C 228,242 236,233 236,220 L 236,193 C 236,188 233,184 229,184 C 225,184 222,188 222,193 L 222,217 C 222,223 219,228 213,228 C 208,228 204,224 204,218 C 204,213 207,207 212,198 L 240,147 C 245,138 247,129 247,121 C 247,104 233,95 215,95 Z" fill="url(#goldGrad)" />
+
+  <!-- Right 'B' in Teal -->
+  <path d="M 235,120 L 275,120 C 292,120 302,128 302,142 C 302,152 296,159 286,163 C 299,167 306,177 306,193 C 306,212 292,222 273,222 L 235,222 Z M 257,138 L 257,160 L 272,160 C 280,160 284,155 284,149 C 284,143 280,138 272,138 Z M 257,178 L 257,204 L 273,204 C 282,204 287,198 287,191 C 287,183 282,178 273,178 Z" fill="url(#tealGrad)" />
+
+  <!-- Bottom Label: BACK FOR BRAND -->
+  <text x="200" y="280" text-anchor="middle" font-family="'Inter', -apple-system, sans-serif" font-size="22" font-weight="700" letter-spacing="4.5" fill="url(#goldGrad)">BACK FOR BRAND</text>
+</svg>
